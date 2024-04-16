@@ -110,3 +110,6 @@ venv.bak/
 app/
 .app/
 *.swp
+
+.idea/*
+.app/

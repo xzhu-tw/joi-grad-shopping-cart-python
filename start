@@ -12,3 +12,5 @@ python -m unittest
 
 
 printf "To run tests execute \npython -m unittest\n"
+
+printf "show this message\n"
