@@ -65,3 +65,39 @@ class ShoppingCartTest(unittest.TestCase):
          order = cart.checkout()
 
          self.assertEqual(5, order.loyalty_points)
+
+    def test_no_discount_under_100(self):
+        products = [Product(90, "DISCOUNT_50_PER_100_A", PRODUCT)]
+        cart = ShoppingCart(CUSTOMER, products)
+        order = cart.checkout()
+        self.assertEqual(90, order.total)
+
+    def test_discount_between_100_to_200(self):
+        products = [Product(20, "DISCOUNT_50_PER_100_A", PRODUCT)] * 8
+        cart = ShoppingCart(CUSTOMER, products)
+        order = cart.checkout()
+        self.assertEqual(110, order.total)
+
+    def test_discount_between_200_to_300(self):
+        products = [Product(20, "DISCOUNT_50_PER_100_A", PRODUCT)] * 11
+        cart = ShoppingCart(CUSTOMER, products)
+        order = cart.checkout()
+        self.assertEqual(120, order.total)
+
+    def test_no_discount_when_different_product_codes(self):
+        products = [Product(30, "DISCOUNT_50_PER_100_A", "T1"), Product(40, "DISCOUNT_50_PER_100_B", "T2")]
+        cart = ShoppingCart(CUSTOMER, products)
+        order = cart.checkout()
+        self.assertEqual(70, order.total)
+
+    def test_discount_for_different_product_codes(self):
+        products = [Product(70, "DISCOUNT_50_PER_100_A", "T1"), Product(60, "DISCOUNT_50_PER_100_B", "T2")]
+        cart = ShoppingCart(CUSTOMER, products)
+        order = cart.checkout()
+        self.assertEqual(80, order.total)
+
+    def test_discount_for_different_product_codes(self):
+        products = [Product(110, "DISCOUNT_50_PER_100_A", "T1"), Product(120, "DISCOUNT_50_PER_100_B", "T2")]
+        cart = ShoppingCart(CUSTOMER, products)
+        order = cart.checkout()
+        self.assertEqual(130, order.total)
