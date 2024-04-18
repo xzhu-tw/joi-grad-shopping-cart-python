@@ -105,11 +105,9 @@ venv.bak/
 
 # IDEs
 .vscode
+.idea
 
 # venv name
 app/
 .app/
 *.swp
-
-.idea/*
-.app/
